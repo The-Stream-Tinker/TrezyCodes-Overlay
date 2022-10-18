@@ -1,0 +1,32 @@
+{
+  "name": "trezy.stream",
+  "version": "0.0.0-development",
+  "main": "index.js",
+  "license": "BSD-3-Clause",
+  "packageManager": "yarn@3.2.4",
+  "scripts": {
+    "build": "next build",
+    "dev": "next",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@twurple/auth": "^5.2.3",
+    "@twurple/chat": "^5.2.3",
+    "classnames": "^2.3.2",
+    "framer-motion": "^7.5.3",
+    "micro-cors": "^0.1.1",
+    "next": "^12.3.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.54.9",
+    "tinycolor2": "^1.4.2",
+    "zustand": "^4.1.1"
+  }
+}

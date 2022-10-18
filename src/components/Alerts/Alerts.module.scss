@@ -1,0 +1,53 @@
+.alerts {
+	color: white;
+	display: flex;
+	flex-direction: column;
+	font-size: 45px;
+	gap: 30px;
+	height: 35vh;
+	justify-content: flex-end;
+	overflow: hidden;
+	overflow-y: auto;
+	padding: 30px;
+}
+
+.alert {
+	background-color: hsla(
+		var(--palette-dark-grey-h),
+		var(--palette-dark-grey-s),
+		calc(var(--palette-dark-grey-l) + 10%),
+		0.5
+	);
+	padding: 30px 60px;
+
+	> header {
+		display: flex;
+		margin-bottom: 10px;
+		position: relative;
+
+		&:after {
+			background-color: white;
+			border-bottom-style: solid;
+			box-shadow: 2px 2px 0 0 black;
+			content: '';
+			height: 1px;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 100%;
+		}
+	}
+}
+
+.follow-alert {
+	--accent-color: var(--palette-red);
+}
+
+.raid-alert {
+	--accent-color: var(--palette-twitch-purple);
+}
+
+.icon {
+	color: var(--accent-color);
+	margin-right: 10px;
+}

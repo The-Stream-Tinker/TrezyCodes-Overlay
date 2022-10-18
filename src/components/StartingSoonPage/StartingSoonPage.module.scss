@@ -1,0 +1,80 @@
+.starting-soon-page {
+	background-color: var(--palette-dark-grey);
+	height: 100vh;
+	width: 100vw;
+
+	> header {
+		background-color: black;
+		bottom: 100px;
+		color: white;
+		font-size: 200px;
+		padding-left: 100px;
+		padding-right: 500px;
+		position: absolute;
+		right: 0;
+	}
+
+	video {
+		bottom: 0;
+		left: 0;
+		opacity: 0.25;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+}
+
+.alerts {
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+
+.chat {
+	height: 1700px;
+	position: absolute;
+	right: 100px;
+	top: 0;
+	width: 960px;
+}
+
+.socials {
+	bottom: 270px;
+	color: white;
+	font-size: 45px;
+	left: 150px;
+	position: absolute;
+
+	> * {
+		align-items: center;
+		display: flex;
+		overflow: hidden;
+		position: absolute;
+	}
+
+	.handle,
+	.icon {
+		background-color: black;
+		background-color: var(--social-colour);
+		box-shadow: 15px 15px 0 0 black;
+	}
+
+	.icon {
+		font-size: 1.5em;
+		margin-bottom: 15px;
+		padding: 15px 25px;
+		position: relative;
+		z-index: 1;
+	}
+
+	.handle {
+		margin-left: 30px;
+		margin-right: 15px;
+		padding-bottom: 15px;
+		padding-left: 30px;
+		padding-right: 30px;
+		padding-top: 15px;
+		position: relative;
+		z-index: 0;
+	}
+}

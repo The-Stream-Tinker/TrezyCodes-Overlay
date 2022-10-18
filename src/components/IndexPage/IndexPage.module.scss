@@ -1,0 +1,15 @@
+.index-page {
+	color: white;
+	font-size: 73px;
+	height: 100vh;
+	position: relative;
+	width: 100vw;
+
+	div {
+		background-color: var(--palette-light-blue);
+		bottom: 650px;
+		padding: 100px;
+		position: absolute;
+		right: 0;
+	}
+}

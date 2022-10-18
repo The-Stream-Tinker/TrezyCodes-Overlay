@@ -1,0 +1,14 @@
+:root {
+	--hue-shift: 0deg;
+
+	@include generateHSLCustomPropertiesFromColor('chroma', green);
+
+	@include generateHSLCustomPropertiesFromColor('palette-blue', #0e92c7);
+	@include generateHSLCustomPropertiesFromColor('palette-dark-grey', #1a1a1a);
+	@include generateHSLCustomPropertiesFromColor('palette-red', #fa2828);
+	@include generateHSLCustomPropertiesFromColor('palette-discord-blurple', #5865f2);
+	@include generateHSLCustomPropertiesFromColor('palette-tiktok-pink', #ff0050);
+	@include generateHSLCustomPropertiesFromColor('palette-twitch-purple', #9146ff);
+	@include generateHSLCustomPropertiesFromColor('palette-twitter-blue', #1d9bf0);
+	@include generateHSLCustomPropertiesFromColor('palette-youtube-red', #ff0000);
+}

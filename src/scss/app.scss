@@ -1,0 +1,28 @@
+@import './mixins/generateHSLCustomProperties';
+@import './mixins/generateHSLCustomPropertiesFromColor';
+
+@import './variables/colors';
+
+* {
+	box-sizing: border-box;
+	line-height: 1.5;
+}
+
+html {
+	background-color: transparent;
+	font-family: articulat-cf, sans-serif;
+	font-style: normal;
+}
+
+body,
+html {
+	height: 100vh;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: 100vw;
+}
+
+p {
+	margin: 0;
+}
