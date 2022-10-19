@@ -45,7 +45,9 @@ export function ChatUser(props) {
 						const badgeURL = (badges.channel[badge] ?? badges.global[badge])[user.badges.get(badge)]
 
 						return (
-							<img src={badgeURL} />
+							<img
+								key={badge}
+								src={badgeURL} />
 						)
 					})}
 				</div>
