@@ -10,23 +10,26 @@ export const store = create((set, get) => ({
 	badges: null,
 	chatMessages: [],
 	events: [],
-	colorDictionary: {},
+	colourDictionary: {},
 	isChatConnected: false,
 	isChatConnecting: true,
 
 	addChatMessage(messageObject) {
 		const {
 			chatMessages,
-			colorDictionary,
+			colourDictionary,
 		} = get()
 
 		const newChatMessages = [...chatMessages]
-		let newColorDictionary = colorDictionary
+		let newColourDictionary = colourDictionary
 
 		if (newChatMessages.length) {
 			const [mostRecentChatMessageGroup] = newChatMessages.splice(chatMessages.length - 1, 1)
 
-			if (mostRecentChatMessageGroup[0].userInfo.userId === messageObject.userInfo.userId) {
+			const isUserIDMatching = mostRecentChatMessageGroup[0].userInfo.userId === messageObject.userInfo.userId
+			const isColourMatching = mostRecentChatMessageGroup[0].userInfo.color === messageObject.userInfo.color
+
+			if (isUserIDMatching && isColourMatching) {
 				newChatMessages.push([
 					...mostRecentChatMessageGroup,
 					messageObject,
@@ -39,32 +42,32 @@ export const store = create((set, get) => ({
 			newChatMessages.push([messageObject])
 		}
 
-		if (!colorDictionary[messageObject.userInfo.color]) {
-			newColorDictionary = { ...colorDictionary }
+		if (!colourDictionary[messageObject.userInfo.color]) {
+			newColourDictionary = { ...colourDictionary }
 
-			const foregroundColorObject = tinycolor(messageObject.userInfo.color)
-			const backgroundColorObject = foregroundColorObject.clone()
+			const foregroundColourObject = tinycolor(messageObject.userInfo.color)
+			const backgroundColourObject = foregroundColourObject.clone()
 
-			const colorAdjustmentMethod = foregroundColorObject.isDark() ? 'lighten' : 'darken'
+			const colourAdjustmentMethod = foregroundColourObject.isDark() ? 'lighten' : 'darken'
 
 			let comparisons = 0
-			while(!tinycolor.isReadable(foregroundColorObject, backgroundColorObject, {level: 'AAA'}) && (comparisons < 100)) {
-				foregroundColorObject[colorAdjustmentMethod](1)
+			while(!tinycolor.isReadable(foregroundColourObject, backgroundColourObject, {level: 'AAA'}) && (comparisons < 100)) {
+				foregroundColourObject[colourAdjustmentMethod](1)
 				comparisons += 1
 			}
 
-			newColorDictionary = {
-				...colorDictionary,
+			newColourDictionary = {
+				...colourDictionary,
 				[messageObject.userInfo.color]: {
-					background: backgroundColorObject.toHexString(),
-					foreground: foregroundColorObject.toHexString(),
+					background: backgroundColourObject.toHexString(),
+					foreground: foregroundColourObject.toHexString(),
 				},
 			}
 		}
 
 		set({
 			chatMessages: newChatMessages,
-			colorDictionary: newColorDictionary,
+			colourDictionary: newColourDictionary,
 		})
 	},
 

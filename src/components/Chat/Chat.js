@@ -36,12 +36,12 @@ export function Chat(props) {
 
 	const {
 		chatMessages,
-		colorDictionary,
+		colourDictionary,
 		isChatConnected,
 		isChatConnecting,
 	} = useStore(state => ({
 		chatMessages: state.chatMessages,
-		colorDictionary: state.colorDictionary,
+		colourDictionary: state.colourDictionary,
 		isChatConnected: state.isChatConnected,
 		isChatConnecting: state.isChatConnecting,
 	}))
@@ -55,8 +55,8 @@ export function Chat(props) {
 			<div
 				className={styles['message-wrapper']}
 				style={{
-					'--user-background-color': 'white',
-					'--user-foreground-color': 'black',
+					'--user-background-colour': 'white',
+					'--user-foreground-colour': 'black',
 				}}>
 				<header>
 					<div className={styles['username']}>{'System'}</div>
@@ -94,13 +94,15 @@ export function Chat(props) {
 			</div>
 
 			{chatMessages.map((chatMessageGroup, chatMessageGroupIndex) => {
+				const colourPair = colourDictionary[chatMessageGroup[0].userInfo.color]
+
 				return (
 					<div
 						key={chatMessageGroupIndex}
 						className={styles['message-wrapper']}
 						style={{
-							'--user-background-color': colorDictionary[chatMessageGroup[0].userInfo.color].background,
-							'--user-foreground-color': colorDictionary[chatMessageGroup[0].userInfo.color].foreground,
+							'--user-background-colour': colourPair.background,
+							'--user-foreground-colour': colourPair.foreground,
 						}}>
 						{chatMessageGroup.map((chatMessage, chatMessageIndex) => {
 							return (

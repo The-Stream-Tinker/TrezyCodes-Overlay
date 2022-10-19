@@ -51,7 +51,7 @@
 
 .message {
 	align-self: stretch;
-	border-left-color: var(--user-background-color);
+	border-left-color: var(--user-background-colour);
 	border-left-style: solid;
 	border-left-width: 5px;
 	display: flex;
@@ -65,8 +65,8 @@
 		animation-iteration-count: 1;
 		animation-name: highlighted-message;
 		animation-timing-function: cubic-bezier(0.045, 0.285, 0.000, 1.650);
-		background-color: var(--user-background-color);
-		color: var(--user-foreground-color);
+		background-color: var(--user-background-colour);
+		color: var(--user-foreground-colour);
 	}
 
 	img {
@@ -80,13 +80,13 @@
 
 .username {
 	box-shadow: 15px 15px 0 0 black;
-	color: var(--user-foreground-color);
+	color: var(--user-foreground-colour);
 	padding-left: 20px;
 	padding-right: 20px;
 	position: relative;
 
 	&:after {
-		background-color: var(--user-background-color);
+		background-color: var(--user-background-colour);
 		bottom: 0;
 		content: '';
 		left: 0;
