@@ -37,7 +37,8 @@ export function ChatUser(props) {
 							return (
 								<FontAwesomeIcon
 									fixedWidth
-									icon={faSpinner} />
+									icon={faSpinner}
+									spinPulse />
 							)
 						}
 

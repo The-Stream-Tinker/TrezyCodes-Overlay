@@ -82,6 +82,11 @@ export const store = create((set, get) => ({
 	},
 
 	async getBadges() {
+		// Exit early if badges have already been retrieved
+		if (get().badges) {
+			return
+		}
+
 		const response = await fetch('/api/twitch/badges')
 		const badges = await response.json()
 
