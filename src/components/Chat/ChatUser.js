@@ -36,6 +36,7 @@ export function ChatUser(props) {
 						if (!badges) {
 							return (
 								<FontAwesomeIcon
+									key={badge}
 									fixedWidth
 									icon={faSpinner}
 									spinPulse />

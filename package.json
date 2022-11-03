@@ -20,6 +20,7 @@
     "@twurple/chat": "^5.2.3",
     "classnames": "^2.3.2",
     "framer-motion": "^7.5.3",
+    "localforage": "^1.10.0",
     "micro-cors": "^0.1.1",
     "next": "^12.3.0",
     "prop-types": "^15.8.1",

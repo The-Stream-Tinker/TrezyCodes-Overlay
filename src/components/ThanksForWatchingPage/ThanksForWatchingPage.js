@@ -1,22 +1,20 @@
 // Style imports
-import styles from './StartingSoonPage.module.scss'
+import styles from './ThanksForWatchingPage.module.scss'
 
 
 
 
 
 // Local imports
-import { Alerts } from '../Alerts/Alerts.js'
-import { Chat } from '../Chat/Chat.js'
 import { Socials } from '../Socials/Socials.js'
 
 
 
 
 
-export function StartingSoonPage() {
+export function ThanksForWatchingPage() {
 	return (
-		<div className={styles['starting-soon-page']}>
+		<div className={styles['thanks-for-watching-page']}>
 			<iframe
 				allow={'autoplay'}
 				allowfullscreen
@@ -26,14 +24,10 @@ export function StartingSoonPage() {
 				width={'3840'} />
 
 			<header>
-				{'Starting Soon...'}
+				{'Thanks for Watching!'}
 			</header>
 
 			<Socials />
-
-			<Alerts className={styles['alerts']} />
-
-			<Chat className={styles['chat']} />
 		</div>
 	)
 }

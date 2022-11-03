@@ -24,18 +24,16 @@ export async function handler(request, response) {
 
 	const { access_token: accessToken } = accessTokenResponseJSON
 
-	console.log(accessToken)
 	const headers = {
 		Accept: 'application/json',
 		Authorization: `Bearer ${accessToken}`,
 		'Client-Id': process.env.TWITCH_CLIENT_ID,
 	}
 
-	const results = await Promise
-		.all([
-			fetch(`https://api.twitch.tv/helix/chat/badges/global`, { headers }),
-			fetch(`https://api.twitch.tv/helix/chat/badges/?broadcaster_id=${72632519}`, { headers }),
-		])
+	const results = await Promise.all([
+		fetch(`https://api.twitch.tv/helix/chat/badges/global`, { headers }),
+		fetch(`https://api.twitch.tv/helix/chat/badges/?broadcaster_id=${72632519}`, { headers }),
+	])
 
 	const [
 		globalBadgeResults,

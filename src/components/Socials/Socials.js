@@ -1,5 +1,5 @@
 // Style imports
-import styles from './StartingSoonPage.module.scss'
+import styles from './Socials.module.scss'
 
 
 

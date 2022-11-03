@@ -1,5 +1,5 @@
 // Style imports
-import styles from './StartingSoonPage.module.scss'
+import styles from './BeRightBackPage.module.scss'
 
 
 
@@ -14,9 +14,9 @@ import { Socials } from '../Socials/Socials.js'
 
 
 
-export function StartingSoonPage() {
+export function BeRightBackPage() {
 	return (
-		<div className={styles['starting-soon-page']}>
+		<div className={styles['be-right-back-page']}>
 			<iframe
 				allow={'autoplay'}
 				allowfullscreen
@@ -26,7 +26,7 @@ export function StartingSoonPage() {
 				width={'3840'} />
 
 			<header>
-				{'Starting Soon...'}
+				{'Be Right Back!'}
 			</header>
 
 			<Socials />

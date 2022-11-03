@@ -10,13 +10,7 @@ import {
 	Fragment,
 	useMemo,
 } from 'react'
-import {
-	faCircleCheck,
-	faCircleXmark,
-	faSpinner,
-} from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -37,13 +31,9 @@ export function Chat(props) {
 	const {
 		chatMessages,
 		colourDictionary,
-		isChatConnected,
-		isChatConnecting,
 	} = useStore(state => ({
 		chatMessages: state.chatMessages,
 		colourDictionary: state.colourDictionary,
-		isChatConnected: state.isChatConnected,
-		isChatConnecting: state.isChatConnecting,
 	}))
 
 	const compiledClassName = useMemo(() => {
@@ -52,57 +42,16 @@ export function Chat(props) {
 
 	return (
 		<div className={compiledClassName}>
-			<div
-				className={styles['message-wrapper']}
-				style={{
-					'--user-background-colour': 'white',
-					'--user-foreground-colour': 'black',
-				}}>
-				<header>
-					<div className={styles['username']}>{'System'}</div>
-				</header>
-
-				<div className={classnames(styles['message'], styles['system'])}>
-					{isChatConnecting && (
-						<>
-							{'Connecting to chat...'}
-							<FontAwesomeIcon
-								fixedWidth
-								icon={faSpinner}
-								spinPulse />
-						</>
-					)}
-
-					{(!isChatConnecting && isChatConnected) && (
-						<>
-							{'Connected!'}
-							<FontAwesomeIcon
-								fixedWidth
-								icon={faCircleCheck} />
-						</>
-					)}
-
-					{(!isChatConnecting && !isChatConnected) && (
-						<>
-							{'Failed to connect to chat.'}
-							<FontAwesomeIcon
-								fixedWidth
-								icon={faCircleXmark} />
-						</>
-					)}
-				</div>
-			</div>
-
-			{chatMessages.map((chatMessageGroup, chatMessageGroupIndex) => {
+			{chatMessages.map(chatMessageGroup => {
 				const colourPair = colourDictionary[chatMessageGroup[0].userInfo.color]
 
 				return (
 					<div
-						key={chatMessageGroupIndex}
+						key={chatMessageGroup[0].id}
 						className={styles['message-wrapper']}
 						style={{
-							'--user-background-colour': colourPair.background,
-							'--user-foreground-colour': colourPair.foreground,
+							'--user-background-colour': colourPair?.background ?? '#fff',
+							'--user-foreground-colour': colourPair?.foreground ?? '#000',
 						}}>
 						{chatMessageGroup.map((chatMessage, chatMessageIndex) => {
 							return (

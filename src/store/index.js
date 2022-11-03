@@ -1,87 +1,86 @@
 // Module imports
 import create from 'zustand/vanilla'
-import tinycolor from 'tinycolor2'
+import LocalForage from 'localforage'
+import { persist } from 'zustand/middleware'
+
+
+
+
+// Local imports
+import {
+	ACTIONS,
+	TwitchDataManager,
+} from '../helpers/TwitchDataManager.js'
 
 
 
 
 
-export const store = create((set, get) => ({
+// Constants
+const KEYS_TO_OMIT_FROM_PERSISTENCE = ['twitchDataManager']
+
+
+
+
+
+const storeFn = (set, get) => ({
 	badges: null,
 	chatMessages: [],
 	events: [],
-	colourDictionary: {},
-	isChatConnected: false,
-	isChatConnecting: true,
-
-	addChatMessage(messageObject) {
-		const {
-			chatMessages,
-			colourDictionary,
-		} = get()
-
-		const newChatMessages = [...chatMessages]
-		let newColourDictionary = colourDictionary
-
-		if (newChatMessages.length) {
-			const [mostRecentChatMessageGroup] = newChatMessages.splice(chatMessages.length - 1, 1)
-
-			const isUserIDMatching = mostRecentChatMessageGroup[0].userInfo.userId === messageObject.userInfo.userId
-			const isColourMatching = mostRecentChatMessageGroup[0].userInfo.color === messageObject.userInfo.color
-
-			if (isUserIDMatching && isColourMatching) {
-				newChatMessages.push([
-					...mostRecentChatMessageGroup,
-					messageObject,
-				])
-			} else {
-				newChatMessages.push(mostRecentChatMessageGroup)
-				newChatMessages.push([messageObject])
-			}
-		} else {
-			newChatMessages.push([messageObject])
-		}
-
-		if (!colourDictionary[messageObject.userInfo.color]) {
-			newColourDictionary = { ...colourDictionary }
-
-			const foregroundColourObject = tinycolor(messageObject.userInfo.color)
-			const backgroundColourObject = foregroundColourObject.clone()
-
-			const colourAdjustmentMethod = foregroundColourObject.isDark() ? 'lighten' : 'darken'
-
-			let comparisons = 0
-			while(!tinycolor.isReadable(foregroundColourObject, backgroundColourObject, {level: 'AAA'}) && (comparisons < 100)) {
-				foregroundColourObject[colourAdjustmentMethod](1)
-				comparisons += 1
-			}
-
-			newColourDictionary = {
-				...colourDictionary,
-				[messageObject.userInfo.color]: {
-					background: backgroundColourObject.toHexString(),
-					foreground: foregroundColourObject.toHexString(),
-				},
-			}
-		}
-
-		set({
-			chatMessages: newChatMessages,
-			colourDictionary: newColourDictionary,
-		})
+	colourDictionary: {
+		'#000000': {
+			background: '#ffffff',
+			foreground: '#000000',
+		},
+		'#ffffff': {
+			background: '#000000',
+			foreground: '#ffffff',
+		},
 	},
+	twitchDataManager: new TwitchDataManager,
 
-	addEvent(eventObject) {
+	addSystemMessage(message, type) {
+		const newChatMessage = {
+			content: {
+				emotes: [{
+					text: message,
+					type: 'text',
+				}],
+			},
+			id: 'connect',
+			isSystem: true,
+			type,
+			userInfo: {
+				badges: new Map,
+				color: '#000000',
+				displayName: 'System',
+				userId: 'system',
+			},
+		}
+
 		set(previousState => {
-			const { events } = previousState
+			const newChatMessages = [...previousState.chatMessages]
 
-			return {
-				events: [
-					...events,
-					eventObject,
-				],
+			if (newChatMessages.length) {
+				const [mostRecentChatMessageGroup] = newChatMessages.splice(newChatMessages.length - 1, 1)
+
+				if (mostRecentChatMessageGroup[0].userInfo.userId === 'system') {
+					newChatMessages.push([
+						...mostRecentChatMessageGroup,
+						newChatMessage,
+					])
+				} else {
+					newChatMessages.push(mostRecentChatMessageGroup)
+					newChatMessages.push([newChatMessage])
+				}
+			} else {
+				newChatMessages.push([newChatMessage])
 			}
+
+			return { chatMessages: newChatMessages }
 		})
+
+		return newChatMessage
 	},
 
 	async getBadges() {
@@ -95,4 +94,70 @@ export const store = create((set, get) => ({
 
 		set({ badges })
 	},
+})
+
+export const store = create(persist(storeFn, {
+	name: 'overlay-storage',
+
+	/** @returns {LocalForage} The storage engine to be used LocalForage. */
+	getStorage() {
+		LocalForage.config({
+			name: 'overlay-storage',
+		})
+		return LocalForage
+	},
+
+	/**
+	 * @param {object} state The Zustand state.
+	 * @returns {object} The Zustand state without state that shouldn't be persisted.
+	 */
+	partialize(state) {
+		const stateEntries = Object.entries(state)
+		const filteredStateEntries = stateEntries.filter(([key]) => {
+			return !KEYS_TO_OMIT_FROM_PERSISTENCE.includes(key)
+		})
+		return Object.fromEntries(filteredStateEntries)
+	},
 }))
+
+const { twitchDataManager } = store.getState()
+
+twitchDataManager.on(ACTIONS.CHAT_CONNECTING, () => {
+	const { addSystemMessage } = store.getState()
+
+	const pendingMessage = addSystemMessage('Connecting to chat...', 'pending')
+
+	twitchDataManager.once(ACTIONS.CHAT_CONNECTED, () => {
+		delete pendingMessage.type
+		addSystemMessage('Connected!', 'success')
+	})
+})
+
+twitchDataManager.on(ACTIONS.CHAT_MESSAGE, () => {
+	const {
+		chatMessages,
+		colourDictionary,
+	} = twitchDataManager
+
+	store.setState(previousState => ({
+		chatMessages: [
+			...previousState.chatMessages,
+			...chatMessages,
+		],
+		colourDictionary: {
+			...previousState.colourDictionary,
+			...colourDictionary,
+		},
+	}))
+})
+
+twitchDataManager.on(ACTIONS.EVENT, () => {
+	const { events } = twitchDataManager
+
+	store.setState({
+		events: [
+			...previousState.events,
+			...events,
+		],
+	})
+})

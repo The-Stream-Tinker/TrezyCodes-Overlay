@@ -1,0 +1,51 @@
+.screenshare-page {
+	background-color: var(--palette-dark-grey);
+	height: 100vh;
+	width: 100vw;
+}
+
+.frame {
+	background-color: var(--chroma);
+}
+
+.alerts {
+	bottom: 30px;
+	left: 870px;
+	position: absolute;
+}
+
+.camera {
+	aspect-ratio: 16 / 9;
+	background-color: green;
+	bottom: 60px;
+	position: absolute;
+	right: 60px;
+	height: 360px;
+}
+
+.chat {
+	bottom: 0;
+	font-size: 30px;
+	left: 0;
+	position: absolute;
+	width: 800px;
+	z-index: 2;
+}
+
+.pipe {
+	background-color: var(--palette-blue);
+	height: 100vh;
+	left: 830px;
+	position: absolute;
+	width: 10px;
+}
+
+.screenshare {
+	aspect-ratio: 16 / 9;
+	background-color: green;
+	position: absolute;
+	height: 1620px;
+	right: 60px;
+	top: 60px;
+	z-index: 1;
+}
