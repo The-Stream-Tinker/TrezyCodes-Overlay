@@ -33,7 +33,7 @@ export class TwitchDataManager extends EventEmitter {
 	 * Private instance properties
 	\****************************************************************************/
 
-	#broadcastChannel = new BroadcastChannel('overlay')
+	#broadcastChannel = null
 
 	#chatClient = new ChatClient({})
 
@@ -61,6 +61,7 @@ export class TwitchDataManager extends EventEmitter {
 		super()
 
 		if (typeof window !== 'undefined') {
+			this.#broadcastChannel = new BroadcastChannel('overlay')
 			this.#broadcastChannel.addEventListener('message', (...args) => this.#handleBroadcastMessage(...args))
 			this.#initialise()
 		}
